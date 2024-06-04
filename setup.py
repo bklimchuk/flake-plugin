@@ -2,14 +2,14 @@ from setuptools import setup
 
 
 setup(
-    name="braces_checker",
+    name="func_checker",
     license="MIT",
-    version="1.1.8",
-    package_dir={"": "braces_checker/"},
-    packages=["braces_checker"],
+    version="1.2.9",
+    package_dir={"": "checkers/"},
+    packages=["func_checker"],
     entry_points={
         "flake8.extension": [
-            "XF51 = braces_checker.braces_checker:BracesChecker"
+            "XF51 = func_checker.func_arg_checker:FunctionFormatChecker"
         ],
     },
     classifiers=[

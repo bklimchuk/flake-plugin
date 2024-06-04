@@ -1,9 +1,10 @@
 import ast
+from typing import Any
 
 
-class BracesChecker:
-    name = 'braces_checker'
-    version = '1.1.8'
+class FunctionFormatChecker:
+    name = 'func_arg_checker'
+    version = '1.2.9'
 
     def __init__(self, tree, filename):
         self.tree = tree
@@ -13,9 +14,19 @@ class BracesChecker:
         for node in ast.walk(self.tree):
             if isinstance(node, ast.FunctionDef):
                 print(f"Checking function: {node.name}")
-                if len(node.args.args) > 1:
+                print('fun args')
+                print(f'{node.args.args}')
+                print(enumerate(node.args.args))
+                if len(node.args.args) < 2:
+                    print('len(node.args.args) < 1:')
+                    if not self.is_properly_formatted2(node):
+                        print('yielding')
+                        yield (node.lineno, 0, "FFC001 Function arguments "
+                                               "are not properly formatted", type(self))
+                else:
                     if not self.is_properly_formatted(node):
-                        yield (node.lineno, 0, "FFC001 Function arguments are not properly formatted", type(self))
+                        yield (node.lineno, 0, "FFC001 Function arguments "
+                                               "are not properly formatted", type(self))
 
     def is_properly_formatted(self, node):
         try:
@@ -27,6 +38,10 @@ class BracesChecker:
         except Exception as e:
             print(f"Error reading lines: {e}")
             return False
+
+        # count = enumerate(node.args.args)
+        # print('ags count')
+        # print(count)
 
         print(f"Function definition line: {func_def_line.strip()}")
         for arg in node.args.args:
@@ -45,8 +60,37 @@ class BracesChecker:
             if i > 0 and arg.lineno == node.args.args[i - 1].lineno:
                 print(f"Argument {arg.arg} is on the same line as the previous argument")
                 return False
-
         return True
+
+    def is_properly_formatted2(self, node):
+
+        with open(self.filename, 'r') as file:
+            lines = file.readlines()
+
+        print(len(node.args.args))
+
+        if len(node.args.args) >= 1:
+            func_end_line = node.body[0].lineno - 1
+            print(node.body[0].lineno)
+            print('assessing func end line')
+            print(func_end_line)
+            # if len(node.decorator_list) > 0:
+                # func_end_line = max(func_end_line, max(d.lineno for d in node.decorator_list))
+                # print('lines data')
+                # print(func_end_line)
+
+            # closing_line = func_end_line + 1
+            closing_parenthesis_line = lines[func_end_line - 1].strip()
+            print('assessing closing_parenthesis_line')
+            print(closing_parenthesis_line)
+            if closing_parenthesis_line.startswith(')'):
+                print(f"Closing parenthesis of function '{node.name}' is at line: {func_end_line + 2}")
+                return False
+            else:
+                print(f"Closing parenthesis not found at the expected position for function '{node.name}'")
+                return True
+        else:
+            return False
 
     def is_closing_parenthesis_aligned(self, func_def_line, closing_parenthesis_line):
         # Find the starting index of the 'def' keyword
@@ -74,5 +118,5 @@ class BracesChecker:
 def run_checks(filename):
     with open(filename, 'r') as file:
         tree = ast.parse(file.read(), filename=filename)
-    checker = BracesChecker(tree, filename)
+    checker = FunctionFormatChecker(tree, filename)
     return list(checker.run())
