@@ -4,7 +4,7 @@ from setuptools import setup
 setup(
     name="func_checker",
     license="MIT",
-    version="1.2.9",
+    version="1.3.0",
     package_dir={"": "checkers/"},
     packages=["func_checker"],
     entry_points={
@@ -22,4 +22,7 @@ setup(
         "Topic :: Software Development :: Libraries :: Python Modules",
         "Topic :: Software Development :: Quality Assurance",
     ],
+    tests_require=[
+        'pytest'
+    ]
 )
