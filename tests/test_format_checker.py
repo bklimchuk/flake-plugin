@@ -37,7 +37,7 @@ class Test:
 
 def test_improperly_formatted_function():
     code = '''
-def improperly_formatted_function(self, sdk_partner_token: str, user_uuid4: str = None, phone: str = None, email: str = None):
+def improperly_formatted_function_with_args(self, sdk_partner_token: str, user_uuid4: str = None, phone: str = None, email: str = None):
     pass
 '''
     errors = run_checker(code)
@@ -57,7 +57,7 @@ def properly_formatted_one_argument(self):
 def test_properly_formatted_function_2():
     code = '''
 class Test:
-    def properly_formatted_function_2(
+    def properly_formatted_function_with_args(
             self,
             some_arg: str,
             other: str

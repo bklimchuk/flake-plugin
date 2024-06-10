@@ -1,5 +1,4 @@
-# # test_functions.py
-#
+
 def properly_formatted_no_args() -> str:
     print('t')
     str = ""
@@ -16,7 +15,7 @@ def improperly_formatted_no_args(
 ):
     pass
 
-def some_func_with_a_pretty_long_declaration_name(
+def some_function_with_a_pretty_long_declaration_name_kind_of(
         f: str,
         long_named_argument: str,
         another_argiment:str
@@ -25,7 +24,7 @@ def some_func_with_a_pretty_long_declaration_name(
 
 
 class Test:
-    def properly_formatted_function(
+    def properly_formatted_function_with_args(
             self,
             token: str,
             uuid4: str = None,
@@ -43,7 +42,7 @@ class Test:
     ):
         pass
 
-    def improperly_formatted_function(self, sdk_partner_token: str, user_uuid4: str = None, phone: str = None, email: str = None):
+    def improperly_formatted_function_with_args(self, sdk_partner_token: str, user_uuid4: str = None, phone: str = None, email: str = None):
         pass
 
     def improperly_formatted_one_argument(
