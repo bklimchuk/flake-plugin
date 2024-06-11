@@ -1,4 +1,4 @@
-# Braces Plugin for Flake8
+# Function dsclaration plugin for Flake8
 
 This is a custom Flake8 plugin designed to enforce proper formatting of function definitions in Python. It ensures that function arguments are correctly aligned and formatted according to specified guidelines.
 
